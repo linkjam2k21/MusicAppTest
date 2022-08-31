@@ -15,9 +15,9 @@ interface MusicListDao {
     fun getAllMusic(): Flow<List<MusicListModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(music: MusicListModel)
+    fun insert(music: MusicListModel)
 
     @Query("DELETE FROM music")
-    suspend fun deleteAll()
+    fun deleteAll()
 
 }

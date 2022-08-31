@@ -17,16 +17,16 @@ class MusicListMapper {
 
         return MusicListModel(
             trackId = shareModelServer.trackId,
-            bandName = shareModelServer.artistName,
-            trackName = shareModelServer.trackName,
+            bandName = shareModelServer.artistName ?: "",
+            trackName = shareModelServer.trackName ?: "",
             imageUrl = shareModelServer.artworkUrl100,
-            albumName = shareModelServer.collectionName,
+            albumName = shareModelServer.collectionName ?: "",
             collectionId = shareModelServer.collectionId,
             trackNumber = shareModelServer.trackNumber,
             trackTime = minutes.toString() + ":" + secondsStr,
-            genreName = shareModelServer.primaryGenreName + " - " + shareModelServer.releaseDate.substring(0,4),
-            previewSong = shareModelServer.previewUrl,
-            kind = shareModelServer.kind
+            genreName = shareModelServer.primaryGenreName ?: "" + " - " + shareModelServer.releaseDate.substring(0,4),
+            previewSong = shareModelServer.previewUrl ?: "",
+            kind = shareModelServer.kind ?: ""
         )
     }
 }

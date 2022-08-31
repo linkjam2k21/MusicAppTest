@@ -43,10 +43,11 @@ class MainActivity : AppCompatActivity() {
         musicRepo = (application as MusicApplication).musicRepo
 
         musicViewModel =
-            ViewModelProvider(this, MusicViewModelFactory((application as MusicApplication).musicRepo)).get(MusicViewModel::class.java)
+            ViewModelProvider(this, MusicViewModelFactory((application as MusicApplication).musicListDatabaseRepo)).get(MusicViewModel::class.java)
 
-        musicViewModel.shareLiveData.observe(this, Observer {
+        musicViewModel.allMusic.observe(this, Observer {
             it?.let {
+                adapter.submitList(it)
                 Toast.makeText(this, "Hi World", Toast.LENGTH_LONG).show()
             }
         })
@@ -75,11 +76,11 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        Thread {
+        /*Thread {
             runOnUiThread {
                 getMusicList("in utero", offSet, 20)
             }
-        }.start()
+        }.start()*/
 
         //musicViewModel.getMusicListData("in situ", 1, 20)
     }
@@ -87,9 +88,12 @@ class MainActivity : AppCompatActivity() {
     fun getMusicList(term: String, offSet: Int, limit: Int){
         progressIndicator.visibility = View.VISIBLE
         val data =  musicRepo.getSearchMusic(term, offSet,limit)
-        // Post the result to the main thread
-        val en = data.get(0)
-        adapter.submitList(data)
+
+        data.forEach {
+            musicViewModel.insert(it)
+        }
+
+        //adapter.submitList(data)
         progressIndicator.visibility = View.GONE
     }
 }

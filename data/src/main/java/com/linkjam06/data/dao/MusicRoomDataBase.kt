@@ -2,6 +2,7 @@ package com.linkjam06.data.dao
 
 import android.content.Context
 import androidx.room.Database
+import androidx.room.Ignore
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -9,6 +10,7 @@ import com.linkjam06.domain.dao.MusicListDao
 import com.linkjam06.domain.models.MusicListModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
 
 @Database(entities = arrayOf(MusicListModel::class), version = 1, exportSchema = false)
 abstract class MusicRoomDataBase : RoomDatabase() {
