@@ -25,7 +25,7 @@ class MusicListMapper {
             trackNumber = shareModelServer.trackNumber,
             trackTime = minutes.toString() + ":" + secondsStr,
             genreName = shareModelServer.primaryGenreName + " - " + shareModelServer.releaseDate.substring(0,4),
-            previewSong = shareModelServer.previewURL,
+            previewSong = shareModelServer.previewUrl,
             kind = shareModelServer.kind
         )
     }

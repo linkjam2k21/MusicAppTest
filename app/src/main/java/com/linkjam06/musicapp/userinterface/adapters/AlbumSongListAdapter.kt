@@ -1,73 +1,55 @@
 package com.linkjam06.musicapp.userinterface.adapters
 
 
-import android.content.Intent
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.linkjam06.domain.models.MusicListModel
 import com.linkjam06.musicapp.R
-import com.linkjam06.musicapp.userinterface.AlbumActivity
-import com.squareup.picasso.Picasso
 
-class AlbumSongListAdapter : ListAdapter<MusicListModel, AlbumSongListAdapter.AlbumSongsViewHolder>(UserDiffCallBack()) {
+
+interface AlbumSongItemClickListener {
+    fun onAlbumSongItemClickListener(data: MusicListModel)
+}
+
+class AlbumSongListAdapter(private val context: Context,
+                           private val list: List<MusicListModel>,
+                           private val albumSongItemClickListener: AlbumSongItemClickListener
+) : RecyclerView.Adapter<AlbumSongListAdapter.AlbumSongsViewHolder>() {
+
+    class AlbumSongsViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        val trackNumberItemView: TextView = itemView.findViewById(R.id.trackNumber)
+        val trackNameItemView: TextView = itemView.findViewById(R.id.trackName)
+        val trackTimeItemView: TextView = itemView.findViewById(R.id.trackTime)
+        val playButtonItemView: FrameLayout = itemView.findViewById(R.id.playButton)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumSongsViewHolder {
-        return AlbumSongsViewHolder.create(parent)
+        val view = LayoutInflater.from(context).inflate(R.layout.albumsonglist_item, parent, false)
+        return AlbumSongsViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return list.count()
     }
 
     override fun onBindViewHolder(holder: AlbumSongsViewHolder, position: Int) {
-        val current = getItem(position)
-        holder.bind(current)
-    }
+        val music = list[position]
 
-    class AlbumSongsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val trackNumberItemView: TextView = itemView.findViewById(R.id.trackNumber)
-        private val trackNameItemView: TextView = itemView.findViewById(R.id.trackName)
-        private val trackTimeItemView: TextView = itemView.findViewById(R.id.trackTime)
+        holder.trackNumberItemView.text = music.trackNumber.toString()
+        holder.trackNameItemView.text = music.trackName
+        holder.trackTimeItemView.text = music.trackTime
 
-        private val playButtonItemView: FrameLayout = itemView.findViewById(R.id.playButton)
+        if(holder.layoutPosition % 2 == 1)
+            holder.itemView.setBackgroundColor(Color.parseColor("#232323"));
 
-        fun bind(music: MusicListModel) {
-            trackNumberItemView.text = music.trackNumber.toString()
-            trackNameItemView.text = music.trackName
-            trackTimeItemView.text = music.trackTime
-
-            if(layoutPosition % 2 == 1)
-                itemView.setBackgroundColor(Color.parseColor("#232323"));
-
-            playButtonItemView.setOnClickListener {
-
-            }
-        }
-
-        companion object {
-            fun create(parent: ViewGroup): AlbumSongsViewHolder {
-                val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.albumsonglist_item, parent, false)
-
-                return AlbumSongsViewHolder(view)
-            }
-        }
-
-    }
-
-    private class UserDiffCallBack : DiffUtil.ItemCallback<MusicListModel>() {
-        override fun areItemsTheSame(oldItem: MusicListModel, newItem: MusicListModel): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areContentsTheSame(oldItem: MusicListModel, newItem: MusicListModel): Boolean {
-            return oldItem.trackId == newItem.trackId
+        holder.playButtonItemView.setOnClickListener {
+            albumSongItemClickListener.onAlbumSongItemClickListener(music)
         }
     }
-
 }

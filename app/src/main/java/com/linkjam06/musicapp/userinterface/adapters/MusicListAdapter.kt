@@ -49,11 +49,10 @@ class MusicListAdapter : ListAdapter<MusicListModel, MusicListAdapter.MusicViewH
              itemView.setOnClickListener{
                  val intent = Intent(itemView.context, AlbumActivity::class.java).apply {
                      putExtra("collectionID", music.collectionId)
-                     putExtra("albumName", music.albumName)
-                     putExtra("bandName", music.bandName)
-                     putExtra("genreName", music.genreName)
-                     putExtra("imageUrl", music.imageUrl)
-
+                     putExtra("albumName", music.albumName ?: "No tiene album")
+                     putExtra("bandName", music.bandName ?: "No tiene banda")
+                     putExtra("genreName", music.genreName ?: "No tiene genero")
+                     putExtra("imageUrl", music.imageUrl )
                  }
 
                  itemView.context.startActivity(intent)

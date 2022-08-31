@@ -27,13 +27,13 @@ data class MusicListResult (
     val collectionCensoredName: String,
     val trackCensoredName: String,
 
-    val artistViewURL: String,
+    val artistViewUrl: String,
 
-    val collectionViewURL: String,
+    val collectionViewUrl: String,
 
-    val trackViewURL: String,
+    val trackViewUrl: String,
 
-    val previewURL: String,
+    val previewUrl: String,
 
     val artworkUrl30: String,
     val artworkUrl60: String,
