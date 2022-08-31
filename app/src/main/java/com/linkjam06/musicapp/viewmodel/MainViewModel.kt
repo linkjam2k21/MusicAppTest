@@ -1,26 +1,21 @@
 package com.linkjam06.musicapp.viewmodel
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.linkjam06.data.apiservice.ApiService
-import com.linkjam06.data.repositories.MusicListRepoImpl
+import androidx.lifecycle.*
+import com.linkjam06.data.repositories.MusicListDatabaseRepo
 import com.linkjam06.domain.models.MusicListModel
+import kotlinx.coroutines.launch
 
-class MusicViewModel(private val musicRepo: MusicListRepoImpl )  : ViewModel() {
+class MusicViewModel(private val musicRepo: MusicListDatabaseRepo )  : ViewModel() {
+    val allMusic: LiveData<List<MusicListModel>> = musicRepo.allMusic.asLiveData()
 
-    val shareLiveData = MutableLiveData<List<MusicListModel>>()
-
-    fun getMusicListData(term: String, offset: Int, limit: Int) : List<MusicListModel> {
-        return musicRepo.getSearchMusic(term, offset, limit)
+    fun insert(music: MusicListModel) = viewModelScope.launch {
+        musicRepo.insert(music)
     }
 
 }
 
-
-class MusicViewModelFactory(private val musicRepo: MusicListRepoImpl) : ViewModelProvider.Factory {
+class MusicViewModelFactory(private val musicRepo: MusicListDatabaseRepo) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MusicViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
