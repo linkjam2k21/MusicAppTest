@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1F1F1F"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        >
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:paddingRight="10dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/albumName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="In Utero (20th Anniversary Edition)"
+                android:textColor="#fff">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/bandName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18dp"
+                android:text="Nirvana"
+                android:textColor="#C1535E">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/genreName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="14dp"
+                android:text="ALTERNATIVA - 1993"
+                android:textColor="#969DA3">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+     >
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
